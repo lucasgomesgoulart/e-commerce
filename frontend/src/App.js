@@ -1,10 +1,11 @@
-
-import Layout from './Screens/Layout'
+import Layout from './Components/Layout'
 
 function App() {
   return (
     <div className="App">
-        <Layout/>
+      <>
+        <Layout />
+      </>
     </div>
   );
 }
