@@ -9,7 +9,7 @@ class UserService {
 
     static async login(username, password) {
         try {
-            const userFind = await db.Users.findOne({ where: { username } })
+            const userFind = await db.User.findOne({ where: { username } })
             if (!userFind) {
                 throw new Error('User not found')
             }
@@ -28,7 +28,7 @@ class UserService {
 
     static async createUser(userToCreate) {
         try {
-            const newUser = await db.Users.create(userToCreate)
+            const newUser = await db.User.create(userToCreate)
             return newUser;
         } catch (error) {
             throw error;
@@ -38,7 +38,7 @@ class UserService {
     static async updateUser(userToUpdate, id) {
         if (!userToUpdate || !id) return { message: 'User not found' }
         try {
-            const userFound = await db.Users.findByPk(id)
+            const userFound = await db.User.findByPk(id)
             if (!userFound) {
                 throw new Error('User not found')
             }
@@ -52,8 +52,8 @@ class UserService {
     static async deleteUser(id) {
         if (!id) return { message: 'User not found' }
         try {
-            const userFound = await db.Users.findByPk(id)
-            const deletedUser = await db.Users.destroy(userFound)
+            const userFound = await db.User.findByPk(id)
+            const deletedUser = await db.User.destroy({where:{id}})
             return { deletedUser, userFound }
         } catch (error) {
             throw error;

@@ -8,7 +8,8 @@ class UserController {
             const userLogged = await UserService.login(username, password)
             return res.status(200).json({ userLogged })
         } catch (error) {
-            return res.status(500).json({ message: error.message })
+            return res.status(error.statusCode || 500).json({ message: error.message })
+
         }
     }
 
@@ -23,7 +24,8 @@ class UserController {
         } catch (error) {
             console.log(userToCreate)
             console.log(error)
-            return res.status(500).json({ message: error.message })
+            return res.status(error.statusCode || 500).json({ message: error.message })
+
         }
     }
 
@@ -37,7 +39,8 @@ class UserController {
                 data: updateUser
             })
         } catch (error) {
-            res.send(500).json({ message: error.message })
+            return res.status(error.statusCode || 500).json({ message: error.message })
+
         }
     }
 
@@ -49,7 +52,8 @@ class UserController {
                 message: 'User deleted succesfully'
             })
         } catch (error) {
-            return res.status(500).json({ message: error.message })
+            return res.status(error.statusCode || 500).json({ message: error.message })
+
         }
     }
 }
