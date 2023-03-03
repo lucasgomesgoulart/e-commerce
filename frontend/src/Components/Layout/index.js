@@ -1,35 +1,45 @@
-import { Menu } from 'antd';
-import { Link, Route, Routes } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Rotas from '../../Rotas';
-import './styles.scss'
+import './styles.scss';
+import './reset.scss';
 const App = () => {
+
+    const menuItems = [
+        { path: '/', name: 'Início' },
+        { path: '/restaurantes', name: 'Restaurantes' },
+        { path: '/carrinho', name: 'Carrinho' },
+        { path: '/contato', name: 'Contato' },
+    ];
+
+    const renderMenuItems = () => {
+        return menuItems.map((item) => (
+            <li key={item.path} id={item.id}>
+                <NavLink exact to={item.path}>
+                    {item.name}
+                </NavLink>
+            </li>
+        ));
+    };
 
     return (
         <>
-            <div className='header'>
-                <Menu mode="horizontal" style={{ display: 'flex', justifyContent: 'center', gap: '50px', fontSize: '15px' }}>
-                    <Menu.Item key="home">
-                        <Link to="/">Home</Link>
-                    </Menu.Item>
+            <header className='header'>
+                <ul>{renderMenuItems()}</ul>
+                <div className='menu-items-2'>
+                    <ul>
+                        <NavLink to="/register">
+                            Criar conta
+                        </NavLink>
+                    </ul>
 
-                    <Menu.Item key="products">
-                        <Link to="/products">Products</Link>
-                    </Menu.Item>
-
-                    <Menu.Item key="cart">
-                        <Link to="/cart">Cart</Link>
-                    </Menu.Item>
-
-                    <Menu.Item key="contact">
-                        <Link to="/contact">Contact</Link>
-                    </Menu.Item>
-
-                    <Menu.Item key="login">
-                        <Link to="/login">Login</Link>
-                    </Menu.Item>
-                </Menu>
-                <Rotas />
-            </div>
+                    <NavLink to="/login">
+                        <button>
+                            Entrar
+                        </button>
+                    </NavLink>
+                </div>
+            </header>
+            <Rotas />
         </>
     );
 };

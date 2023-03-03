@@ -9,9 +9,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Address.init({
     street: DataTypes.STRING,
+    number: DataTypes.STRING,
+    complement: DataTypes.STRING,
+    district: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,
-    zipCode: DataTypes.STRING
+    country: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Address',

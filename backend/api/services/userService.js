@@ -1,8 +1,9 @@
 const db = require('../models');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
 
-require('dotenv').config()
+dotenv.config()
 
 
 class UserService {
@@ -25,10 +26,10 @@ class UserService {
         }
     }
 
-
     static async createUser(userToCreate) {
+        const password = bcrypt.hashSync(userToCreate.password, 8)
         try {
-            const newUser = await db.User.create(userToCreate)
+            const newUser = await db.User.create({ ...userToCreate, password })
             return newUser;
         } catch (error) {
             throw error;
@@ -53,7 +54,7 @@ class UserService {
         if (!id) return { message: 'User not found' }
         try {
             const userFound = await db.User.findByPk(id)
-            const deletedUser = await db.User.destroy({where:{id}})
+            const deletedUser = await db.User.destroy({ where: { id } })
             return { deletedUser, userFound }
         } catch (error) {
             throw error;
