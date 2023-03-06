@@ -4,7 +4,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Individuals extends Model {
         static associate(models) {
-            this.belongsTo(models.User, { foreignKey: 'ID_USER' })
+            this.belongsTo(models.User, { foreignKey: 'id_user' })
         }
     }
     Individuals.init({
@@ -17,9 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'Individuals',
         timestamps: true,
-        createdAt: 'CREATED_AT',
-        updatedAt: 'UPDATED_AT',
-        primaryKey: 'ID_USER',
+        primaryKey: 'id_user',
     });
 
     return Individuals;
