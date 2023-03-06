@@ -4,20 +4,21 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Address extends Model {
     static associate(models) {
-      this.belongsTo(models.User, { foreignKey: 'fk_user_id' })
+      this.belongsTo(models.User, { foreignKey: 'id_user' });
     }
   }
   Address.init({
-    street: DataTypes.STRING,
-    number: DataTypes.STRING,
-    complement: DataTypes.STRING,
-    district: DataTypes.STRING,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    country: DataTypes.STRING
+    rua: DataTypes.STRING,
+    numero: DataTypes.INTEGER,
+    bairro: DataTypes.STRING,
+    cidade: DataTypes.STRING,
+    estado: DataTypes.STRING,
+    pais: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Address',
+    underscored: true
   });
+
   return Address;
 };

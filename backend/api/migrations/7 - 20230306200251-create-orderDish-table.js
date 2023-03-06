@@ -2,42 +2,36 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Addresses', {
+    await queryInterface.createTable('OrderDish', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      street: {
-        type: Sequelize.STRING
-      },
-      number: {
-        type: Sequelize.STRING
-      },
-      complement: {
-        type: Sequelize.STRING
-      },
-      district: {
-        type: Sequelize.STRING
-      },
-      city: {
-        type: Sequelize.STRING
-      },
-      state: {
-        type: Sequelize.STRING
-      },
-      country: {
-        type: Sequelize.STRING
-      },
-      fk_user_id: {
+      orderId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
-          model: 'Users',
-          key: 'id'
+          model: 'Orders',
+          key: 'id_order'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
+      },
+      dishId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Dishes',
+          key: 'id_dish'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -51,6 +45,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Addresses');
+    await queryInterface.dropTable('OrderDish');
   }
 };

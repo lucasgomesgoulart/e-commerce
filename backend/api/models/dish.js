@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         modelName: 'Dish',
-        timestamps: false
     });
     return Dish;
 };
