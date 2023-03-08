@@ -6,14 +6,12 @@ module.exports = {
       id_user: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false,
-        references:
-        {
+        references: {
           model: 'users',
           key: 'id_user'
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       rua: {
         type: Sequelize.STRING,
@@ -21,7 +19,10 @@ module.exports = {
       },
       numero: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          min: 1
+        }
       },
       bairro: {
         type: Sequelize.STRING,
@@ -37,6 +38,14 @@ module.exports = {
       },
       pais: {
         type: Sequelize.STRING,
+        allowNull: true
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false
       }
     });

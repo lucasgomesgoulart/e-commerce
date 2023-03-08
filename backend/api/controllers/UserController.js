@@ -1,9 +1,11 @@
-// const userService = require('../services/userService');
+const userService = require('../services/userService');
 
 const UserController = {
+  
   async create(req, res) {
+    const user = req.body
     try {
-      const newUser = await userService.createUser(req.body);
+      const newUser = await userService.createUser(user);
       return res.status(201).json(newUser);
     } catch (error) {
       console.error(error);

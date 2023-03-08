@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {}
   }
   OrderDish.init({
-    order_id: {
+    fk_order_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id_order'
       }
     },
-    dish_id: {
+    fk_dish_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
