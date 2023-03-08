@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      defaultValue: 0,
       validate: {
         isIn: [[0, 1]],
       },
@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     cpf: {
       type: DataTypes.STRING,
+      allowNull: false,
       unique: true,
       validate: {
         is: /^\d{11}$/,
@@ -49,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     business_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+
     },
     cnpj: {
       type: DataTypes.STRING,
@@ -60,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     trade_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+
       unique: true,
     },
     createdAt: {

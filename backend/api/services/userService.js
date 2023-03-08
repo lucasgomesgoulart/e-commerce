@@ -11,21 +11,22 @@ class UserService {
         }
     }
 
-    static async updateUser(id, userToUpdate) {
-        if(!id || userToUpdate) return {message: 'User not found'}
+    static async updateUser(id_user, userToUpdate) {
+        if (!id_user || !userToUpdate) return { message: 'User not found' }
         try {
-            const updatedUser = await db.Users.update(userToUpdate)
-            return updatedUser;
+          const updatedUser = await db.User.update(userToUpdate, {where: {id_user}});
+          return updatedUser;
         } catch (error) {
-            throw error;
+          throw error;
         }
-    }
+      }
+      
 
-    static async deleteUser(id){
-        if(!id) return {message: 'User not found'}
+    static async deleteUser(id_user) {
+        if (!id_user) return { message: 'User not found' }
         try {
-            await db.Users.destroy(id)
-            return {message: 'User deleted'}
+            await db.User.destroy({ where: { id_user: id_user } })
+            return { message: 'User deleted' }
         } catch (error) {
             throw error;
         }

@@ -11,7 +11,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     Order.init({
-        order_date: DataTypes.DATE
+        id:{
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            allowNull: false,
+            autoIncrement: true,
+        }
     }, {
         sequelize,
         modelName: 'Order',

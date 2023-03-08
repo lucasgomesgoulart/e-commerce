@@ -13,6 +13,7 @@ module.exports = {
 
       type: {
         type: Sequelize.INTEGER,
+        defaultValue: 0,
         validade: {
           isIn: [[0, 1]]
         }
