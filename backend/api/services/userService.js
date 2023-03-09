@@ -1,10 +1,15 @@
 const db = require('../models')
-
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 class UserService {
 
     static async createUser(userToCreate) {
+        console.log(userToCreate.password)
         try {
+            const userPasswordHash = bcrypt.hashSync(userToCreate.password, 8)
+            userToCreate.password = userPasswordHash
             const newUser = await db.User.create(userToCreate)
+
             return newUser;
         } catch (error) {
             throw error;
@@ -14,13 +19,13 @@ class UserService {
     static async updateUser(id_user, userToUpdate) {
         if (!id_user || !userToUpdate) return { message: 'User not found' }
         try {
-          const updatedUser = await db.User.update(userToUpdate, {where: {id_user}});
-          return updatedUser;
+            const updatedUser = await db.User.update(userToUpdate, { where: { id_user } });
+            return updatedUser;
         } catch (error) {
-          throw error;
+            throw error;
         }
-      }
-      
+    }
+
 
     static async deleteUser(id_user) {
         if (!id_user) return { message: 'User not found' }

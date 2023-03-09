@@ -1,10 +1,10 @@
 'use strict';
-const { Model } = require('sequelize');
+const { Model, ForeignKeyConstraintError } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      this.hasOne(models.Address, { foreignKey: 'id_user' });
+      this.belongsToMany(models.Address, { through: 'user_has_address', foreignKey: 'fk_user_id' });
     }
   }
   User.init({
@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
+      isEmail: true,
       allowNull: false,
       unique: true,
       validate: {
@@ -50,28 +51,40 @@ module.exports = (sequelize, DataTypes) => {
     },
     business_name: {
       type: DataTypes.STRING,
-
+      allowNull: function () {
+        if (this.type === 1) {
+          return false;
+        }
+        return true;
+      }
     },
     cnpj: {
       type: DataTypes.STRING,
       unique: true,
-      validate: {
-        is: /^\d{14}$/,
+      allowNull: function () {
+        if (this.type === 1) {
+          return false;
+        }
+        return true;
       },
+      validate: {
+        is: function (value) {
+          if (this.type === 1 && value && !(/^\d{14$/).test(value)) {
+            throw new Error("The CNPJ field must have 14 digits when type is 1")
+          }
+        }
+      }
     },
     trade_name: {
       type: DataTypes.STRING,
-
       unique: true,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
+      allowNull: function () {
+        if (this.type === 1) {
+          return false;
+        }
+        return true;
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',

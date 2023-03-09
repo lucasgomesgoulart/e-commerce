@@ -4,7 +4,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Address extends Model {
     static associate(models) {
-      this.belongsTo(models.User, { foreignKey: 'id_user' });
+      this.belongsToMany(models.User, { through: 'user_has_address', foreignKey: 'fk_address_id' });
     }
   }
   Address.init({
@@ -13,12 +13,17 @@ module.exports = (sequelize, DataTypes) => {
     bairro: DataTypes.STRING,
     cidade: DataTypes.STRING,
     estado: DataTypes.STRING,
-    pais: DataTypes.STRING
+    pais: DataTypes.STRING,
+    fk_id_user:{
+      type: DataTypes.STRING,
+      references:{
+        model: "User",
+        key: 'id_user'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Address',
-    primaryKey: 'id_user',
-    underscored: true
   });
 
   return Address;

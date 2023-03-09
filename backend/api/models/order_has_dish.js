@@ -28,15 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Dishes',
         key: 'id_dish'
       }
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
+    }
   }, {
     sequelize,
     modelName: 'order_has_dish',

@@ -1,17 +1,19 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('addresses', {
-      id_user: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        references: {
-          model: 'users',
-          key: 'id_user'
-        },
+        autoIncrement: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
+      },
+      fk_id_user:{
+        type: Sequelize.INTEGER,
+        references:{
+          model: "Users",
+          key: "id_user"
+        }
       },
       rua: {
         type: Sequelize.STRING,
