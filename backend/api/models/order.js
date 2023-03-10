@@ -2,25 +2,19 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class Order extends Model {
-            // para lembrar:
-            // belongsTo para definir a relação de um modelo pai para um modelo filho,  belongsToMany para definir a relação de muitos-para-muitos entre dois modelos.
-        static associate(models) {
-            this.belongsToMany(models.Dish, { through: 'orderDish', foreignKey: 'fk_order_id' })
-            this.belongsTo(models.User, { foreignKey: 'fk_user_id' })
-        }
+  class Order extends Model {
+    static associate(models) {
+      Order.belongsTo(models.User, { foreignKey: 'user_id' });
+      Order.belongsTo(models.Restaurant, { foreignKey: 'restaurant_id' });
+      Order.belongsToMany(models.Dish, { through: models.Order_has_Dish, foreignKey: 'order_id' });
     }
-    Order.init({
-        id:{
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            allowNull: false,
-            autoIncrement: true,
-        }
-    }, {
-        sequelize,
-        modelName: 'Order',
-        underscored: true
-    });
-    return Order;
+  }
+  Order.init({
+    total_price: DataTypes.DECIMAL(8, 2),
+    status: DataTypes.STRING,
+  }, {
+    sequelize,
+    modelName: 'Order',
+  });
+  return Order;
 };
