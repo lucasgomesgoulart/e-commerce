@@ -24,10 +24,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      total_price: {
-        allowNull: false,
-        type: Sequelize.DECIMAL(8, 2)
-      },
       status: {
         allowNull: false,
         type: Sequelize.STRING

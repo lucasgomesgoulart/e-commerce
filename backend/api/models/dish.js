@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     class Dish extends Model {
         static associate(models) {
             Dish.belongsTo(models.Restaurant, { foreignKey: 'restaurant_id' });
-            Dish.belongsToMany(models.Order, { through: models.Order_has_Dish, foreignKey: 'dish_id' });
+            Dish.belongsToMany(models.Order, { through: 'orderDish', foreignKey: 'dishId' });
+
         }
     }
     Dish.init({

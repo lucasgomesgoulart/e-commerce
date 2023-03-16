@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Order_has_Dish.init({
     quantity: DataTypes.INTEGER,
-    dish_price: DataTypes.DECIMAL(8, 2),
   }, {
     sequelize,
     modelName: 'Order_has_Dish',

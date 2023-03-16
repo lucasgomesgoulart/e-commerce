@@ -16,6 +16,22 @@ class UserService {
         }
     }
 
+    static async findUserRestaurants(id_user){
+        if(!id_user) return {message: 'User not found'}
+        try {
+            const userRestaurant = await db.User.findByPk(id_user,{
+                // esse include busca o usuário que foi passado nos parametros, e busca todos os restaurantes vinculados ao usuario.
+                include: {
+                    model: db.Restaurant,
+                    as: 'restaurants'
+                }
+            });
+            return userRestaurant
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async updateUser(id_user, userToUpdate) {
         if (!id_user || !userToUpdate) return { message: 'User not found' }
         try {

@@ -28,6 +28,16 @@ const RestaurantController = {
     }
   },
 
+  async findDishes(req,res){
+    const id_restaurant = req.params.id
+    try {
+      const findRestaurantDishes = await restaurantService.findDishes(id_restaurant)
+      return res.status(200).json(findRestaurantDishes);
+    } catch (error) {
+      return res.status(error.statusCode || 500).json({message: error.message});
+    }
+  },
+
   async delete(req, res) {
     try {
       const id_restaurant = req.params.id

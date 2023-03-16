@@ -27,6 +27,16 @@ const UserController = {
     }
   },
 
+  async findUserRestaurants(req, res) {
+    const id_user = req.params.id
+    try {
+      const findUser = await userService.findUserRestaurants(id_user)
+      return res.status(200).json(findUser);
+    } catch (error) {
+      return res.status(error.statusCode || 500).json({ message: error.message });
+    }
+  },
+
   async update(req, res) {
     try {
       const id_user = req.params.id;

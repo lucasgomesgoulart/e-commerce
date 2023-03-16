@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     cnpj: DataTypes.STRING,
     commercial_name: DataTypes.STRING,
-    status: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Restaurant',

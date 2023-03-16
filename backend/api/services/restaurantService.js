@@ -24,6 +24,21 @@ class RestaurantService {
     }
   }
 
+  static async findDishes(id_restaurant) {
+    if(!id_restaurant) return {message: 'Restaurant not found'};
+    try {
+      const findDishes = await db.Restaurant.findByPk(id_restaurant,{
+        include: {
+          model: db.Dish,
+          as: 'dishes'
+        }
+      })
+      return findDishes
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async delete(id_restaurant) {
     if (!id_restaurant) {
       return { message: 'Restaurant not found' };
