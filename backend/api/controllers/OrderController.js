@@ -7,8 +7,8 @@ const OrderController = {
     try {
       const newOrder = await orderService.create({ user_id, restaurant_id, status })
 
-      for (dish in dishes) {
-        await newOrder.addDish(dish.id, { through: { quantity: dish.quantity } })
+      for (const dish of dishes) {
+        await newOrder.addDish(dish.id, { through: { quantity: dish.quantity || 1 } });
       }
       return res.status(201).json(newOrder);
     } catch (error) {
@@ -18,4 +18,4 @@ const OrderController = {
   }
 };
 
-module.exports = OrderController;
+module.exports = OrderController
