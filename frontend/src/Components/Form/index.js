@@ -4,29 +4,28 @@ import * as Yup from 'yup';
 import './style.scss'
 import { useMutation } from 'react-query';
 import api from '../../api';
+import SituationHome from '../Situation/1';
+import Situation2 from '../Situation/2';
+import Situation3 from '../Situation/3';
 
 const FormComponent = () => {
 
-    const [stepOne, setStepOne] = useState(false);
+    const [situation, setSituation] = useState(1);
+
     const validationSchema = Yup.object().shape({
-        username: Yup.string().required('Username is required'),
-        password: Yup.string().required('Password is required'),
+        password: Yup.string().required('Senha é obrigatório'),
         name: Yup.string()
-            .required('Name is required')
-            .test('two-words', 'Please input your full name', (name) => {
+            .required('Preencha seu nome!')
+            .test('two-words', 'Por favor coloque seu nome completo', (name) => {
                 if (!name) return false;
                 const words = name.trim().split(/\s+/);
                 return words.length >= 2;
             }),
         email: Yup.string()
-            .email('Invalid email address')
-            .required('Email is required'),
-        phone: Yup.string()
-            .matches(/^\d+$/, 'Phone must contain only numbers')
-            .max(11, 'Phone must be at most 11 characters long')
-            .required('Phone is required'),
+            .email('E-mail inválido')
+            .required('E-mail é obrigatório'),
+        zip_code: Yup.string().required('CEP é obrigatório')
     });
-
 
     const registerUserMotation = useMutation(async (values, resetForm) => {
         const { data } = await api.post('/createUser', values)
@@ -46,79 +45,31 @@ const FormComponent = () => {
 
     return (
         <>
-            {stepOne ? null : <div className='div-title'>
-                <h2>Cadastre-se agora e faça seus pedidos de onde estiver!</h2>
-            </div>}
-
             <Formik
                 initialValues={{
-                    username: '',
-                    password: '',
                     name: '',
-                    phone: '',
                     email: '',
+                    password: '',
+                    zip_code: '',
+                    state: '',
+                    city: '',
+                    neighborhood: '',
+                    number: '',
+                    street: ''
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm }) => {
                     registerUser(values, resetForm)
                 }}
             >
-                {({ values, touched, resetForm }) => (
+
+                {({ values, touched, resetForm, setFieldValue }) => (
                     <Form>
-                        {stepOne ? null : (
-                            <>
-                                <div>
-                                    <Field
-                                        type="text"
-                                        placeholder="Nome de usuário"
-                                        name="username"
-                                    />
-                                    <ErrorMessage
-                                        name="username"
-                                    >
-                                        {(msg) =>
-                                            stepOne && values.username && touched.username ? (
-                                                <div style={{ color: 'red', fontSize: '15px' }}>{msg}</div>
-                                            ) : null
-                                        }
-                                    </ErrorMessage>
-                                </div>
+                        {situation === 1 ? <SituationHome values={values} setSituation={setSituation} /> : ""}
 
-                                <div>
-                                    <Field type="password" placeholder="Digite sua senha aqui" name="password" />
-                                    <ErrorMessage name="password" component="div" style={{ color: 'red', fontSize: '15px' }} />
-                                </div>
+                        {situation === 2 ? <Situation2 values={values} setSituation={setSituation} /> : ""}
 
-                                <button type="button" onClick={() => setStepOne(true)} disabled={!values.username || !values.password}>
-                                    Continuar
-                                </button>
-                            </>
-                        )}
-
-                        {stepOne && (
-                            <div>
-                                <div className='div-title2'>
-                                    <h2>Falta pouco...</h2>
-                                </div>
-                                <div>
-                                    <Field type="text" placeholder="Nome completo" name="name" />
-                                    <ErrorMessage name="name" component="div" style={{ color: 'red', fontSize: '15px' }} />
-                                </div>
-
-                                <div>
-                                    <Field type="text" placeholder="Email" name="email" />
-                                    <ErrorMessage name="email" component="div" style={{ color: 'red', fontSize: '15px' }} />
-                                </div>
-
-                                <div>
-                                    <Field type="text" placeholder="Telefone" name="phone" />
-                                    <ErrorMessage name="phone" component="div" style={{ color: 'red', fontSize: '15px' }} />
-                                    <button type="submit" id='botaoSubmit'>
-                                        Registrar
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+                        {situation === 3 ? <Situation3 values={values} setSituation={setSituation} setFieldValue={setFieldValue} /> : ""}
                     </Form>
                 )
                 }

@@ -27,6 +27,26 @@ const UserController = {
     }
   },
 
+  async findByEmail(req, res) {
+    const email = req.query.email;
+  
+    if (!email) {
+      return res.status(400).json({ message: 'Invalid Email' });
+    }
+  
+    try {
+      const findEmail = await userService.findByEmail(email);
+      if (findEmail) {
+        return res.status(201).json({ message: 'Email already exists' });
+      }
+      return res.status(200).json({ message: 'Valid e-mail' });
+    } catch (err) {
+      console.log(err);
+      return res.status(err.statusCode || 500).json({ message: err.message });
+    }
+  },
+  
+
   async findUserRestaurants(req, res) {
     const id_user = req.params.id
     try {

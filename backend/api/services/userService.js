@@ -16,10 +16,19 @@ class UserService {
         }
     }
 
-    static async findUserRestaurants(id_user){
-        if(!id_user) return {message: 'User not found'}
+    static async findByEmail(email) {
         try {
-            const userRestaurant = await db.User.findByPk(id_user,{
+            const result =  await db.User.findOne({ where: { email } });
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async findUserRestaurants(id_user) {
+        if (!id_user) return { message: 'User not found' }
+        try {
+            const userRestaurant = await db.User.findByPk(id_user, {
                 // esse include busca o usuário que foi passado nos parametros, e busca todos os restaurantes vinculados ao usuario.
                 include: {
                     model: db.Restaurant,

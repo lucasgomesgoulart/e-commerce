@@ -1,15 +1,42 @@
-import AuthContext from '../../Context/AuthContext'
 import { Field, Form, Formik } from 'formik'
 import './style.scss'
-
+import api from '../../api'
+import { useContext } from 'react'
+import { Context } from '../../Context/AuthProvider'
 
 const LoginInputs = () => {
+    const { authenticated, setAuthenticated } = useContext(Context)
+
+    const fazerLogin = async (email, password) => {
+        try {
+            const userLogged = await api.post('/login', {
+                email, password
+            })
+            if (userLogged.status === 200) {
+                localStorage.setItem('token', userLogged.token)
+                setAuthenticated(true)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
-        <Formik>
-            <Form>
-                <Field name="username" placeholder="Nome de usuario" />
-                <Field name="password" placeholder="Senha" />
-            </Form>
+        <Formik
+            initialValues={{
+                email: '',
+                password: '',
+            }}
+        >
+            {({ values, resetForm }) => (
+                <Form>
+                    <Field name="email" placeholder="Nome de usuario" />
+                    <Field name="password" placeholder="Senha" />
+                    <button type="submit" onClick={() => {
+                        fazerLogin(values.email, values.password);
+                    }}>Entrar</button>
+                </Form>
+            )}
         </Formik>
     )
 }

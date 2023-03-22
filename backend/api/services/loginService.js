@@ -8,11 +8,11 @@ class loginService {
         console.log(email,password)
         try {
             const userFind = await db.User.findOne({ where: { email } })
-            if (!userFind) return { message: 'User not found' }
-            console.log(userFind.id_user, userFind.email, userFind.password)
+            console.log(userFind.id, userFind.email, userFind.password)
+
             if (await bcrypt.compare(password, userFind.password)) {
-                const token = jwt.sign({ id_user: userFind.id_user }, process.env.JWT_SECRET)
-                return { id_user: userFind.id_user, token: token }
+                const token = jwt.sign({ id: userFind.id }, process.env.JWT_SECRET)
+                return ({ id: userFind.id, token: token })
             } else {
                 throw new Error('Wrong password')
             }
