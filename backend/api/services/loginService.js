@@ -5,7 +5,7 @@ require('dotenv').config()
 
 class loginService {
     static async login(email, password) {
-        console.log(email,password)
+        console.log(email, password)
         try {
             const userFind = await db.User.findOne({ where: { email } })
             console.log(userFind.id, userFind.email, userFind.password)
@@ -19,6 +19,16 @@ class loginService {
         } catch (err) {
             console.log(err)
             throw err;
+        }
+    }
+
+    static async validateToken(token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET)
+            return decoded.id
+        } catch (err) {
+            console.log(err)
+            throw err
         }
     }
 }

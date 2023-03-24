@@ -12,8 +12,11 @@ const LoginInputs = () => {
             const userLogged = await api.post('/login', {
                 email, password
             })
+
             if (userLogged.status === 200) {
-                localStorage.setItem('token', userLogged.token)
+                const token = userLogged.data.userLogged.token
+                console.log(userLogged)
+                localStorage.setItem('token', token)
                 setAuthenticated(true)
             }
         } catch (e) {
@@ -31,7 +34,7 @@ const LoginInputs = () => {
             {({ values, resetForm }) => (
                 <Form>
                     <Field name="email" placeholder="Nome de usuario" />
-                    <Field name="password" placeholder="Senha" />
+                    <Field type="password" name="password" placeholder="Senha" />
                     <button type="submit" onClick={() => {
                         fazerLogin(values.email, values.password);
                     }}>Entrar</button>

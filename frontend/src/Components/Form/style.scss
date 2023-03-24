@@ -38,9 +38,16 @@ Form {
         background: #ea1d2c;
         }   
 
-        button:hover{
+        button:not(.btnDisabled):hover{
             background-color: #fa0313;
         }
+}
+
+.btnDisabled{
+    color: #fff;
+    background-color: darkgray;
+
+    cursor: not-allowed;
 }
 
 .div-title {

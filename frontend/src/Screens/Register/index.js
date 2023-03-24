@@ -1,10 +1,12 @@
 import './style.scss'
 import FormComponent from '../../Components/Form'
 import foodIcon from './assets/food-icon.png'
+import LoginInputs from '../../Components/LoginInputs'
 
 
 const Register = () => {
-
+    const route = window.location.pathname
+    
     return (
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
             <div className="container-left">
@@ -17,7 +19,7 @@ const Register = () => {
             </div>
 
             <div className='container-right'>
-                <FormComponent />
+                {route === '/register'? <FormComponent /> : <LoginInputs />}                
             </div>
         </div >
     )

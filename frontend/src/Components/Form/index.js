@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import * as Yup from 'yup';
 import './style.scss'
 import { useMutation } from 'react-query';
@@ -10,37 +11,39 @@ import Situation3 from '../Situation/3';
 
 const FormComponent = () => {
 
+    const navigate = useNavigate()
+
     const [situation, setSituation] = useState(1);
 
     const validationSchema = Yup.object().shape({
         password: Yup.string().required('Senha é obrigatório'),
-        name: Yup.string()
-            .required('Preencha seu nome!')
-            .test('two-words', 'Por favor coloque seu nome completo', (name) => {
-                if (!name) return false;
-                const words = name.trim().split(/\s+/);
-                return words.length >= 2;
-            }),
-        email: Yup.string()
-            .email('E-mail inválido')
-            .required('E-mail é obrigatório'),
+        name: Yup.string().required('Preencha seu nome!'),
+        email: Yup.string().email('E-mail inválido').required('E-mail é obrigatório'),
         zip_code: Yup.string().required('CEP é obrigatório')
     });
 
-    const registerUserMotation = useMutation(async (values, resetForm) => {
-        const { data } = await api.post('/createUser', values)
-        return data;
+    const registerUserMotation = useMutation(async (values) => {
+        try {
+            const { data } = await api.post('/createUser', values)
+            await api.post('/createAddress', {
+                user_id: data.id,
+                state: values.state,
+                city: values.city,
+                neighborhood: values.neighborhood,
+                number: values.number,
+                street: values.street,
+                zip_code: values.zip_code
+            })
+            navigate('/login')
+        } catch (error) {
+            alert('Ops, algo deu errado! Preencha os campos corretamente')
+            console.log(error)
+        }
     })
 
 
-    async function registerUser(values, resetForm) {
-        try {
-            const result = await registerUserMotation.mutateAsync(values)
-            resetForm()
-            console.log(result)
-        } catch (err) {
-            console.log(err);
-        }
+    async function registerUser(values) {
+        await registerUserMotation.mutateAsync(values)
     }
 
     return (
@@ -59,7 +62,8 @@ const FormComponent = () => {
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm }) => {
-                    registerUser(values, resetForm)
+                    registerUser(values)
+                    resetForm()
                 }}
             >
 
@@ -69,7 +73,7 @@ const FormComponent = () => {
 
                         {situation === 2 ? <Situation2 values={values} setSituation={setSituation} /> : ""}
 
-                        {situation === 3 ? <Situation3 values={values} setSituation={setSituation} setFieldValue={setFieldValue} /> : ""}
+                        {situation === 3 ? <Situation3 values={values} setSituation={setSituation} setFieldValue={setFieldValue} />: ""}
                     </Form>
                 )
                 }

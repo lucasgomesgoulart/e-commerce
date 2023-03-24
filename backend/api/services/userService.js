@@ -3,13 +3,12 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 class UserService {
 
-    static async createUser(userToCreate) {
+    static async createUser(userToCreate,batata='oi') {
         console.log(userToCreate.password)
         try {
             const userPasswordHash = bcrypt.hashSync(userToCreate.password, 8)
             userToCreate.password = userPasswordHash
             const newUser = await db.User.create(userToCreate)
-
             return newUser;
         } catch (error) {
             throw error;

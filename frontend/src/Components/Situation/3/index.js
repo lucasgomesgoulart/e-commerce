@@ -14,7 +14,12 @@ const endereco = async (zip_code, setFieldValue) => {
     }
 }
 
+
+
 const Situation3 = ({ values, setSituation, setFieldValue }) => {
+
+    const isFormInvalid = !values.zip_code || !values.state || !values.street || !values.city || !values.number || !values.neighborhood
+
     return (
         <div>
             <div className='div-title2'>
@@ -54,7 +59,7 @@ const Situation3 = ({ values, setSituation, setFieldValue }) => {
                 <ErrorMessage name="number" component="div" style={{ color: 'red', fontSize: '15px' }} />
             </div>
 
-            <button type="submit" id='botaoSubmit'>
+            <button type="submit" id='botaoSubmit' className={isFormInvalid ? 'btnDisabled' : null} disabled={isFormInvalid}>
                 Registrar
             </button>
         </div>
