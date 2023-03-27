@@ -1,94 +1,91 @@
+import { Layout, Menu } from 'antd';
+import { HomeOutlined, ShoppingCartOutlined, LoginOutlined, UserOutlined, UserAddOutlined, ShopOutlined } from '@ant-design/icons';
+import { useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import Rotas from '../../Rotas';
+import { Context } from '../../Context/AuthProvider';
+import Rotas from '../../Rotas'
+import api from '../../api';
 import './styles.scss';
 import './reset.scss';
-import { useContext, useEffect } from 'react'
-import { Context } from '../../Context/AuthProvider'
-import api from '../../api';
 
+const { Sider } = Layout;
 
 const App = () => {
-
-    const { authenticated, setAuthenticated } = useContext(Context)
-    console.log(authenticated)
+    const { authenticated, setAuthenticated } = useContext(Context);
+    console.log(authenticated);
 
     async function validateToken() {
-    const token = localStorage.getItem('token');
-    if (token) {
-        try {
-            const response = await api.get('/validate-token', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setAuthenticated(response.status === 200);
-        } catch (error) {
+        const token = localStorage.getItem('token');
+        if (token) {
+            try {
+                const response = await api.get('/validate-token', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setAuthenticated(response.status === 200);
+            } catch (error) {
+                setAuthenticated(false);
+                console.log(error);
+            }
+        } else {
             setAuthenticated(false);
-            console.log(error);
         }
-    } else {
-        setAuthenticated(false);
     }
-}
 
-useEffect(() => {
-    validateToken();
-}, []);
+    useEffect(() => {
+        validateToken();
+    }, []);
 
-window.addEventListener('storage', () => {
-    validateToken();
-});
-
+    window.addEventListener('storage', () => {
+        validateToken();
+    });
 
     const menuItems = [
-        { path: '/', name: 'Início' },
-        { path: '/restaurantes', name: 'Restaurantes' },
-        { path: '/carrinho', name: 'Carrinho' },
-        { path: '/contato', name: 'Contato' },
+        {
+            icon: <HomeOutlined />,
+            text: 'Início',
+            link: '/',
+        },
+        {
+            icon: <ShopOutlined />,
+            text: 'Restaurantes',
+            link: '/restaurantes',
+        },
+        {
+            icon: <ShoppingCartOutlined />,
+            text: 'Carrinho',
+            link: '/carrinho',
+        },
+        {
+            icon: authenticated ? <UserOutlined /> : <UserAddOutlined />,
+            text: authenticated ? 'Minha conta' : 'Criar conta',
+            link: authenticated ? '/minha-conta' : '/register',
+        },
     ];
 
-    const renderMenuItems = () => {
-        return menuItems.map((item) => (
-            <li key={item.path} id={item.id}>
-                <NavLink exact to={item.path}>
-                    {item.name}
-                </NavLink>
-            </li>
-        ));
-    };
-
-    const renderAccountButton = () => {
-        if (authenticated) {
-            return (
-                <NavLink to="/minha-conta">
-                    <button>Minha Conta</button>
-                </NavLink>
-            );
-        } else {
-            return (
-                <>
-                    <ul>
-                        <NavLink to="/register">
-                            Criar conta
-                        </NavLink>
-                    </ul>
-
-                    <NavLink to="/login">
-                        <button>
-                            Entrar
-                        </button>
-                    </NavLink>
-                </>
-            );
-        }
-    };
+    if (!authenticated) {
+        menuItems.push({
+            icon: <LoginOutlined />,
+            text: 'Faça o login',
+            link: '/login'
+        });
+    }
 
     return (
         <>
-            <header className='header'>
-                <ul>{renderMenuItems()}</ul>
-                <div className='menu-items-2'>
-                    {renderAccountButton()}
-                </div>
-            </header>
+            <Layout>
+                <Sider>
+                    <div className="logo" />
+                    <Menu theme="light" mode="inline" className='menu-antd'>
+                        {menuItems.map(({ icon, text, link }) => (
+                            <Menu.Item key={text} icon={icon} className='menu-item'>
+                                <NavLink to={link} activeClassName="active">
+                                    {text}
+                                </NavLink>
+                            </Menu.Item>
+                        ))}
+                    </Menu>
+                </Sider>
+            </Layout>
             <Rotas />
         </>
     );

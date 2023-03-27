@@ -15,13 +15,14 @@ const Home = () => {
             </div>
 
             <div className="container-card">
-
-                <CardDash className="card">
-                    <p>Restaurantes</p>
-                    <div>
-                        <span>Ver opções</span>
-                    </div>
-                </CardDash>
+                <NavLink to={"/restaurantes"}>
+                    <CardDash className="card">
+                        <p>Restaurantes</p>
+                        <div>
+                            <span>Ver opções</span>
+                        </div>
+                    </CardDash>
+                </NavLink>
 
 
                 <NavLink to={'/mercado'}>
