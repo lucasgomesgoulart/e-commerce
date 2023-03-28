@@ -1,8 +1,8 @@
 import { Layout, Menu } from 'antd';
 import { HomeOutlined, ShoppingCartOutlined, LoginOutlined, UserOutlined, UserAddOutlined, ShopOutlined } from '@ant-design/icons';
 import { useContext, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import { Context } from '../../Context/AuthProvider';
+import { NavLink } from 'react-router-dom';
 import Rotas from '../../Rotas'
 import api from '../../api';
 import './styles.scss';
@@ -78,7 +78,7 @@ const App = () => {
                     <Menu theme="light" mode="inline" className='menu-antd'>
                         {menuItems.map(({ icon, text, link }) => (
                             <Menu.Item key={text} icon={icon} className='menu-item'>
-                                <NavLink to={link} activeClassName="active">
+                                <NavLink to={link}>
                                     {text}
                                 </NavLink>
                             </Menu.Item>

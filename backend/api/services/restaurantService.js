@@ -24,10 +24,19 @@ class RestaurantService {
     }
   }
 
-  static async findDishes(id_restaurant) {
-    if(!id_restaurant) return {message: 'Restaurant not found'};
+  static async findAllRestaurants() {
     try {
-      const findDishes = await db.Restaurant.findByPk(id_restaurant,{
+      const response = await db.Restaurant.findAll()
+      return response
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async findDishes(id_restaurant) {
+    if (!id_restaurant) return { message: 'Restaurant not found' };
+    try {
+      const findDishes = await db.Restaurant.findByPk(id_restaurant, {
         include: {
           model: db.Dish,
           as: 'dishes'

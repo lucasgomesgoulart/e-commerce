@@ -13,6 +13,15 @@ const RestaurantController = {
     }
   },
 
+  async findAllRestaurants(req, res) {
+    try {
+      const allRestaurants = await restaurantService.findAllRestaurants();
+      return res.status(200).json({ allRestaurants })
+    } catch (error) {
+      return res.status(500).json({ message: error.message })
+    }
+  },
+
   async update(req, res) {
     try {
       const id_restaurant = req.params.id;
@@ -28,13 +37,13 @@ const RestaurantController = {
     }
   },
 
-  async findDishes(req,res){
-    const id_restaurant = req.params.id
+  async findDishes(req, res) {
+    const id_user = req.params.id
     try {
-      const findRestaurantDishes = await restaurantService.findDishes(id_restaurant)
+      const findRestaurantDishes = await restaurantService.findDishes(id_user)
       return res.status(200).json(findRestaurantDishes);
     } catch (error) {
-      return res.status(error.statusCode || 500).json({message: error.message});
+      return res.status(error.statusCode || 500).json({ message: error.message });
     }
   },
 

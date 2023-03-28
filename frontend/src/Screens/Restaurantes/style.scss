@@ -1,0 +1,33 @@
+.title-restaurantes {
+
+    h1 {
+        font-size: 38px;
+        color: #ea1d2c;
+        font-weight: 600;
+        justify-content: center;
+        // text-align: center;
+        padding-right: 50px;
+    }
+
+    h2 {
+        color: black;
+        font-size: 22px;
+        padding-right: 50px;
+    }
+}
+
+.button-menu-dish {
+    border-radius: 5px;
+    border: none;
+    background-color: #ea1d2c;
+    color: #FFF;
+    height: 35px;
+    width: 100px;
+    font-size: 14px;
+
+    &:hover {
+        cursor: pointer;
+        transition: 0.5s; 
+        transform: scale(1.1);
+    }
+}

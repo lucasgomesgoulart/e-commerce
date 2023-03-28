@@ -4,6 +4,7 @@ import Register from '../Screens/Register';
 import Restaurantes from '../Screens/Restaurantes';
 import { Context } from '../Context/AuthProvider';
 import { useContext } from 'react';
+import RestaurantDetails from '../Screens/RestaurantDetails';
 const Rotas = () => {
 
   const { authenticated } = useContext(Context)
@@ -14,6 +15,7 @@ const Rotas = () => {
       <Route exact path="/" element={<Home />} />
       <Route path="/restaurantes" element={<Restaurantes />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/restaurantes/:id/pratos" element={<RestaurantDetails />} />
       <Route path="/login" element={authenticated ? <Home /> : <Register />} />
     </Routes>
   );

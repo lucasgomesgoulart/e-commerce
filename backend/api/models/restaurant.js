@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   Restaurant.init({
     name: DataTypes.STRING,
     cnpj: DataTypes.STRING,
-    commercial_name: DataTypes.STRING,
+    description: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Restaurant',

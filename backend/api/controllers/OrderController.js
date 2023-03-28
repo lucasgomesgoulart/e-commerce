@@ -3,9 +3,9 @@ const orderService = require('../services/orderService');
 const OrderController = {
 
   async createOrder(req, res) {
-    const { user_id, restaurant_id, status, dishes } = req.body
+    const { restaurant_id, status, dishes } = req.body
     try {
-      const newOrder = await orderService.create({ user_id, restaurant_id, status })
+      const newOrder = await orderService.create({ user_id: req.admin.id, restaurant_id, status })
 
       for (const dish of dishes) {
         await newOrder.addDish(dish.id, { through: { quantity: dish.quantity || 1 } });
@@ -18,4 +18,4 @@ const OrderController = {
   }
 };
 
-module.exports = OrderController
+module.exports = OrderController;
