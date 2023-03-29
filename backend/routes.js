@@ -42,4 +42,5 @@ router.delete('/deleteDish/:id', verifyToken, DishController.delete)
 
 //order
 router.post('/createOrder', verifyToken, OrderController.createOrder)
+router.get('/getOrderAndDishes', verifyToken, OrderController.getOrderAndDishes)
 module.exports = router

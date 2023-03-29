@@ -28,7 +28,7 @@ const ListItem = ({ dishes, id }) => {
                     actions={[
                         <IconText icon={LikeOutlined} text={Math.floor(Math.random() * 25)} key="list-vertical-like-o" />,
                         <IconText icon={DislikeOutlined} text={Math.floor(Math.random() * 7)} key="list-vertical-message" />,
-                        <ButtonCart item={item} />
+                        <ButtonCart item={item} />,
                     ]}
                     extra={
                         <Avatar size={180} src={item.img_dish} style={{ marginRight: '200px' }} />
