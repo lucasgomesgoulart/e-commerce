@@ -1,0 +1,70 @@
+.table {
+  margin: 20px;
+  font-size: 16px;
+  width: 100%;
+  border-spacing: 0;
+
+  .header-table {
+    th {
+      margin-bottom: 10px;
+      border-bottom: 2px solid black;
+      background-color: transparent;
+      width: 25%;
+
+      &.price-header {
+        width: 20%;
+      }
+    }
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+    width: 25%;
+  }
+
+  tbody tr:hover {
+    background-color: #f0f0f0;
+  }
+
+  .table-row {
+    border-bottom: 1px solid #ddd;
+    height: 55px;
+  }
+
+
+  .quantity-button {
+    border: 1px solid #ea1d2c;
+    background-color: transparent;
+    border-radius: 50px;
+    width: 80px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    .quantity-icon {
+      color: black;
+    }
+  }
+
+  .quantity-icon {
+    color: #ea1d2c;
+    font-size: 18px;
+
+    &:hover {
+      background-color: #ea1d2c;
+      color: white;
+    }
+  }
+
+  .quantity-value {
+    font-size: 16px;
+    color: #ea1d2c;
+  }
+}

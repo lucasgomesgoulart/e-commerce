@@ -35,7 +35,7 @@ const ListItem = ({ dishes, id }) => {
                     }
                 >
                     <List.Item.Meta
-                        title={<a style={{ fontSize: '18px', fontWeight: 500 }} href={item.href}>{item.dish_name}</a>}
+                        title={<a style={{ fontSize: '22px', fontWeight: 500 }} href={item.href}>{item.dish_name}</a>}
                         description={
                             <>
                                 <p style={{ fontSize: '16px' }}>

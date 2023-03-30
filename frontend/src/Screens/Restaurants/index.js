@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createElement } from 'react';
-import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
+import { StarOutlined, LikeOutlined, MessageOutlined, FontSizeOutlined } from '@ant-design/icons';
 import { Context } from '../../Context/AuthProvider';
 import { List, Avatar, Space } from 'antd';
 import { createClient } from 'pexels';
@@ -61,15 +61,15 @@ const Restaurantes = () => {
                             <IconText icon={MessageOutlined} text={Math.floor(Math.random() * 10)} key="list-vertical-message" />,
                         ]}
                         extra={
-                            <Avatar size={125} src={item.logo} />
+                            <Avatar size={125} src={item.logo} style={{display: 'flex', float: 'left'}}/>
                         }
                     >
                         <List.Item.Meta
-                            title={<a href={item.href}>{item.name}</a>}
+                            title={<a style={{ fontSize: '22px', fontWeight: 500 }} href={item.href}>{item.name}</a>}
                             description={
                                 <>
-                                    <p>{item.description}</p>
-                                    <p>{item.cnpj}</p>
+                                    <p style={{ fontSize: '16px' }}>{item.description}</p>
+                                    <p style={{ fontSize: '16px' }}>{item.cnpj}</p>
                                     <NavLink to={`/restaurantes/${item.id}/pratos`}>
                                         <button className='button-menu-dish'>Ver cardápio</button>
                                     </NavLink>
