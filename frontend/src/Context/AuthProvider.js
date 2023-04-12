@@ -1,10 +1,11 @@
-import React, { createContext,  useState } from "react";
+import React, { createContext, useState } from "react";
 const Context = createContext()
 
 
 function AuthProvider({ children }) {
 
     const [authenticated, setAuthenticated] = useState(false)
+    const [totalValue, setTotalValue] = useState('')
 
     return (
 
@@ -14,6 +15,8 @@ function AuthProvider({ children }) {
                 value={{
                     authenticated,
                     setAuthenticated,
+                    totalValue,
+                    setTotalValue
                 }}>
                 {children}
             </Context.Provider>

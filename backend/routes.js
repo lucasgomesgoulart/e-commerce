@@ -6,9 +6,8 @@ const RestaurantController = require('./api/controllers/RestaurantController');
 const UserController = require('./api/controllers/UserController')
 const OrderController = require('./api/controllers/OrderController')
 const verifyToken = require('./api/middlewares/verifyToken');
+const getPexelsToken = require('./api/middlewares/getPexelsToken');
 
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
 const router = Router()
 
 //login
@@ -31,7 +30,7 @@ router.patch('/updateAddress/:id', verifyToken, AddressController.update)
 //restaurants
 
 router.post('/createRestaurant', verifyToken, RestaurantController.create)
-router.get('/findAllRestaurants', verifyToken, RestaurantController.findAllRestaurants)
+router.get('/findAllRestaurants', RestaurantController.findAllRestaurants)
 router.patch('/updateRestaurant/:id', verifyToken, RestaurantController.update)
 router.delete('/deleteRestaurant/:id', verifyToken, RestaurantController.delete)
 router.get('/restaurantes/:id/pratos', RestaurantController.findDishes) // retornar os pratos do restaurante.
@@ -43,4 +42,7 @@ router.delete('/deleteDish/:id', verifyToken, DishController.delete)
 //order
 router.post('/createOrder', verifyToken, OrderController.createOrder)
 router.get('/getOrderAndDishes', verifyToken, OrderController.getOrderAndDishes)
+router.get('/countTotalDishesValue', verifyToken, OrderController.countTotalDishesValue)
+router.delete('/removeDishFromCartAndOrder', verifyToken, OrderController.removeDishFromOrder)
+
 module.exports = router

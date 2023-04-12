@@ -17,7 +17,7 @@ const RestaurantController = {
     try {
       const allRestaurants = await restaurantService.findAllRestaurants();
       return res.status(200).json({ allRestaurants })
-    } catch (error) {
+    }   catch (error) {
       return res.status(500).json({ message: error.message })
     }
   },

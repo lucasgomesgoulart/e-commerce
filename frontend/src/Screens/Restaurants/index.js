@@ -14,7 +14,6 @@ const Restaurantes = () => {
     const client = createClient('rzVuvCqjKdlrJWBobfC99e03yIFrTr3jZb8UR4sjELzGu1PcyR9n12fO');
     const query = 'restaurant facade';
 
-
     useEffect(() => {
         async function fetchRestaurantes() {
             const response = await api.get('/findAllRestaurants');

@@ -9,7 +9,6 @@ import ListItem from "../../Components/ListItem";
 const RestaurantDetails = () => {
 
     // const { authenticated, setAuthenticated } = useContext(Context);
-
     const { id } = useParams()
     const [dishes, setDishes] = useState([])
     const client = createClient('rzVuvCqjKdlrJWBobfC99e03yIFrTr3jZb8UR4sjELzGu1PcyR9n12fO');

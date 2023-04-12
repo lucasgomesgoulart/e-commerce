@@ -1,11 +1,10 @@
 import Swal from 'sweetalert2'
-const AlertToast = (title, text, icon, confirmButtonText, position) => {
+import './styles.scss'
+const AlertToast = (title, text, confirmButtonText) => {
     return (
         Swal.fire({
             title: title,
-            icon: icon,
             confirmButtonText: confirmButtonText,
-            position: position
         })
     )
 }

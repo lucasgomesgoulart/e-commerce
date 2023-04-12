@@ -1,44 +1,99 @@
-import { useEffect, useState } from 'react';
+import { Table, Button } from 'antd';
+import { DeleteOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import './styles.scss';
 import api from '../../api';
-import { CaretDownOutlined, CaretUpOutlined, } from '@ant-design/icons';
-import './styles.scss'
+import { Context } from '../../Context/AuthProvider';
+import { useContext } from 'react';
 
-const TableCart = ({ cart }) => {
-    console.log(cart)
+
+const TableCart = ({ cart, getItensCart, setCart }) => {
+
+    const { totalValue, setTotalValue } = useContext(Context);
+
+    const deleteItem = async (record, orderId) => {
+        try {
+            await api.delete('/removeDishFromCartAndOrder', {
+                data: {
+                    orderId,
+                    dishId: record.id,
+                },
+            });
+            getItensCart();
+            calcTotalValue();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const addQuantity = (index) => {
+        const newCart = [...cart]
+        newCart[index].orderDish.quantity += 1
+        setCart(newCart)
+        calcTotalValue()
+    }
+
+    const removeQuantity = (index) => {
+        const newCart = [...cart]
+        newCart[index].orderDish.quantity -= 1
+        setCart(newCart)
+        calcTotalValue()
+    }
+
+    const calcTotalValue = () => {
+        const total = cart.reduce((acumulador, valorAtual) => {
+            return acumulador + (valorAtual.orderDish.quantity * valorAtual.price);
+        }, 0);
+        setTotalValue(total);
+    }
+
+    const columns = [
+        {
+            title: 'Produto',
+            dataIndex: 'dish_name',
+            key: 'dish_name',
+        },
+        {
+            title: 'Quantidade',
+            dataIndex: 'orderDish',
+            key: 'quantity',
+            render: (orderDish, record, index) => (
+                <div>
+                    <Button size="small" shape="circle" icon={<MinusOutlined />} disabled={orderDish.quantity === 1} onClick={() => { removeQuantity(index) }} />
+                    <span style={{ margin: '0 8px' }}>{orderDish.quantity}</span>
+                    <Button size="small" shape="circle" icon={<PlusOutlined />} onClick={() => { addQuantity(index) }} />
+                </div>
+            ),
+        },
+        {
+            title: 'Preço',
+            dataIndex: 'price',
+            key: 'price',
+            render: price => `R$ ${price}`,
+        },
+        {
+            title: 'Total',
+            dataIndex: 'orderDish',
+            key: 'total',
+            render: (orderDish, record) => `R$ ${orderDish.quantity * record.price}`,
+        },
+        {
+            title: '',
+            dataIndex: '',
+            key: 'delete',
+            render: (record) => <DeleteOutlined className='cart-delete-icon' onClick={() => { deleteItem(record, record.orderId) }} />,
+        },
+    ];
 
     return (
-        <div>
-            <table className='table'>
-                <thead>
-                    <tr className='header-table'>
-                        <th className="product-header">Produto</th>
-                        <th className="price-header">Preço</th>
-                        <th className="quantity-header">Quantidade</th>
-                        <th className="total-header">Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {cart.map((item, i) => (
-                        <tr key={item.dish_name} className='table-row'>
-                            <td className="product-cell">{item.dish_name}</td>
-                            <td className="price-cell">R$ {item.price}</td>
-                            <td className="quantity-cell">
-                                <button className="quantity-button">
-                                    <CaretDownOutlined className="quantity-icon" />
-                                    <div className="quantity-value">
-                                        {item.orderDish.quantity}
-                                    </div>
-                                    <CaretUpOutlined className="quantity-icon" />
-                                </button>
-                            </td>
-                            <td className="total-cell">R$ {(item.price * item.orderDish.quantity).toFixed(2)}</td>
-                        </tr>
-
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    )
-}
+        <Table
+            columns={columns}
+            dataSource={cart}
+            rowKey={(record, index) => index}
+            pagination={false}
+            size="large"
+            className='table'
+        />
+    );
+};
 
 export default TableCart;

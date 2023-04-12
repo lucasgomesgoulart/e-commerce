@@ -40,27 +40,37 @@ const App = () => {
     });
 
     const menuItems = [
-        {
-            icon: <HomeOutlined />,
-            text: 'Início',
-            link: '/',
-        },
-        {
-            icon: <ShopOutlined />,
-            text: 'Restaurantes',
-            link: '/restaurantes',
-        },
-        {
-            icon: <ShoppingCartOutlined />,
-            text: 'Carrinho',
-            link: '/carrinho',
-        },
-        {
-            icon: authenticated ? <UserOutlined /> : <UserAddOutlined />,
-            text: authenticated ? 'Minha conta' : 'Criar conta',
-            link: authenticated ? '/minha-conta' : '/register',
-        },
-    ];
+  {
+    icon: <HomeOutlined />,
+    text: 'Início',
+    link: '/',
+  },
+  {
+    icon: <ShopOutlined />,
+    text: 'Restaurantes',
+    link: '/restaurantes',
+  },
+  {
+    icon: <ShoppingCartOutlined />,
+    text: 'Carrinho',
+    link: '/carrinho',
+  },
+  {
+    icon: authenticated ? <UserOutlined /> : <UserAddOutlined />,
+    text: authenticated ? 'Minha conta' : 'Criar conta',
+    link: authenticated ? '/minha-conta' : '/register',
+    submenu: [
+      {
+        text: 'Perfil',
+        link: '/perfil',
+      },
+      {
+        text: 'Pedidos',
+        link: '/pedidos',
+      },
+    ],
+  },
+];
 
     if (!authenticated) {
         menuItems.push({

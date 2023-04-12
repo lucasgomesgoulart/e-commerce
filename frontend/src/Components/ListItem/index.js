@@ -1,6 +1,6 @@
 import { createElement } from "react"
 import { List, Avatar, Space } from 'antd';
-import {  LikeOutlined, DislikeOutlined } from '@ant-design/icons';
+import { LikeOutlined, DislikeOutlined } from '@ant-design/icons';
 import ButtonCart from "../ButtonCart";
 
 const ListItem = ({ dishes, id }) => {
@@ -16,10 +16,7 @@ const ListItem = ({ dishes, id }) => {
             itemLayout="vertical"
             size="large"
             pagination={{
-                onChange: (page) => {
-                    console.log(page)
-                },
-                pageSize: 3
+                pageSize: 4
             }}
             dataSource={dishes}
             renderItem={(item) => (
