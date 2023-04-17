@@ -6,7 +6,7 @@ function AuthProvider({ children }) {
 
     const [authenticated, setAuthenticated] = useState(false)
     const [totalValue, setTotalValue] = useState('')
-
+    const [userId, setUserId] = useState('')
     return (
 
         <>
@@ -16,7 +16,7 @@ function AuthProvider({ children }) {
                     authenticated,
                     setAuthenticated,
                     totalValue,
-                    setTotalValue
+                    setTotalValue,
                 }}>
                 {children}
             </Context.Provider>

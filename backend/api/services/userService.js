@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 class UserService {
 
-    static async createUser(userToCreate,batata='oi') {
+    static async createUser(userToCreate, batata = 'oi') {
         console.log(userToCreate.password)
         try {
             const userPasswordHash = bcrypt.hashSync(userToCreate.password, 8)
@@ -17,7 +17,7 @@ class UserService {
 
     static async findByEmail(email) {
         try {
-            const result =  await db.User.findOne({ where: { email } });
+            const result = await db.User.findOne({ where: { email } });
             return result;
         } catch (error) {
             throw error;
@@ -61,6 +61,24 @@ class UserService {
         }
     }
 
+
+    static async findUserById(id_user) {
+        if (!id_user) return { message: 'User not found' }
+        try {
+            const user = await db.User.findOne({
+                where: {
+                    id: id_user,
+                },
+                include: {
+                    model: db.Address,
+                    as: 'address'
+                }
+            })
+            return user;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = UserService;

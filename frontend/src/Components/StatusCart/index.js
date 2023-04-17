@@ -9,7 +9,7 @@ const StatusCart = ({ cart, randomValue }) => {
     const { totalValue } = useContext(Context);
 
     const [total, setTotal] = useState('')
-    
+
 
     useEffect(() => {
         calcTotal()
@@ -19,10 +19,6 @@ const StatusCart = ({ cart, randomValue }) => {
         const response = await api.get('/countTotalDishesValue')
         setTotal(response.data.total)
     }
-
-
-
-    
 
     return (
         <div className='container-resumo-compra'>

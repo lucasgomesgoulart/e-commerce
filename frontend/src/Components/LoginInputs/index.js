@@ -15,7 +15,7 @@ const LoginInputs = () => {
 
             if (userLogged.status === 200) {
                 const token = userLogged.data.userLogged.token
-                console.log(userLogged)
+                // console.log(userLogged)
                 localStorage.setItem('token', token)
                 setAuthenticated(true)
             }

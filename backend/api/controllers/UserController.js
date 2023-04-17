@@ -15,7 +15,8 @@ const UserController = {
 
   async findById(req, res) {
     try {
-      const id_user = req.params.id;
+      const id_user = req.admin
+      // console.log(req.admin)
       const user = await userService.findUserById(id_user);
       if (!user) {
         return res.status(404).json({ error: 'User not found' });

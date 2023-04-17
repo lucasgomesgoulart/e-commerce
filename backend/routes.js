@@ -20,6 +20,7 @@ router.post('/createUser', UserController.create)
 router.delete('/deleteUser/:id', verifyToken, UserController.delete)
 router.patch('/updateUser/:id', verifyToken, UserController.update)
 router.get('/users', UserController.findByEmail);
+router.get('/findUserById', verifyToken, UserController.findById);
 
 
 //address

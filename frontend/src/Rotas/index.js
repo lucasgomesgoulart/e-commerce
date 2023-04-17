@@ -6,6 +6,7 @@ import { Context } from '../Context/AuthProvider';
 import { useContext } from 'react';
 import RestaurantDetails from '../Screens/RestaurantDetails';
 import Cart from '../Screens/Cart';
+import Account from '../Screens/Account';
 const Rotas = () => {
 
   const { authenticated } = useContext(Context)
@@ -19,6 +20,8 @@ const Rotas = () => {
       <Route path="/restaurantes/:id/pratos" element={<RestaurantDetails />} />
       <Route path="/login" element={authenticated ? <Home /> : <Register />} />
       <Route path="/carrinho" element={<Cart />} />
+      <Route path="/meus-pedidos" element={<Account />} />
+      <Route path="/minha-conta" element={<Account />} />
     </Routes>
   );
 };

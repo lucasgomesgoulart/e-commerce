@@ -1,9 +1,8 @@
-import { ShoppingCartOutlined } from '@ant-design/icons';
 import api from "../../api";
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { Context } from '../../Context/AuthProvider';
 import AlertToast from '../AlertToast';
-
+import { BsFillCartPlusFill } from "react-icons/bs";
 // async function addCart(item) {
 //     const dishInCard = await api.post('/createOrder', 
 //     //fazer{
@@ -19,7 +18,7 @@ const ButtonCart = ({ item }) => {
             dishes: [{ id: item.id }]
         })
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 if (response.status === 201) {
                     AlertToast("Item adicionado ao carrinho!", "OK");
                 } else {
@@ -34,7 +33,7 @@ const ButtonCart = ({ item }) => {
     return (
         <button className="button-carrinho" onClick={addToCart}>
             <span>
-                <a href="#">{<ShoppingCartOutlined />}</a>
+                <a href="#">{<BsFillCartPlusFill />}</a>
             </span>
             Adicionar ao carrinho
         </button>

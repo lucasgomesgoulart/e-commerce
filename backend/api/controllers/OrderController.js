@@ -6,7 +6,7 @@ const OrderController = {
   async createOrder(req, res) {
     const { restaurant_id, status, dishes } = req.body
     const userLoggedId = req.admin
-    console.log(userLoggedId)
+    // console.log(userLoggedId)
     const orderData = { ...req.body, user_id: userLoggedId }
     try {
       const newOrder = await orderService.create(orderData)

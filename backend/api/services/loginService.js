@@ -8,7 +8,7 @@ class loginService {
         console.log(email, password)
         try {
             const userFind = await db.User.findOne({ where: { email } })
-            console.log(userFind.id, userFind.email, userFind.password)
+            // console.log(userFind.id, userFind.email, userFind.password)
 
             if (await bcrypt.compare(password, userFind.password)) {
                 const token = jwt.sign({ id: userFind.id }, process.env.JWT_SECRET)
@@ -25,6 +25,7 @@ class loginService {
     static async validateToken(token) {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
+            console.log(decoded)
             return decoded.id
         } catch (err) {
             console.log(err)

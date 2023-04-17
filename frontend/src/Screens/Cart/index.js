@@ -20,7 +20,6 @@ const Cart = () => {
     };
 
     const getItensCart = async () => {
-
         setLoading(true);
         try {
             const response = await api.get('/getOrderAndDishes');

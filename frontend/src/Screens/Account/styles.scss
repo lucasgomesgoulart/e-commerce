@@ -1,0 +1,16 @@
+.segmented {
+    background-color: #da291c;
+    color: #FFF;
+    font-size: 18px;
+    margin-right: 80px;
+
+    .ant-segmented-control-item {
+        &.active {
+            background-color: #1890ff;
+            color: #fff;
+            border-color: #1890ff;
+            transition: all 0.2s ease-in-out;
+        }
+    }
+
+}
