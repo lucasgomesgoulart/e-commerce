@@ -1,54 +1,78 @@
 import './styles.scss'
-import api from '../../api';
-import { useEffect } from 'react';
-import { Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
+import './styles.scss'
+import { Avatar, Space } from 'antd';
+import { Upload, message } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+
 
 const EditProfile = ({ userData }) => {
 
+    const validateMessages = {
+        required: '${label} é obrigatório. ',
+        types: {
+            email: 'Insira um ${label} válido.',
+        }
+
+    }
+
     return (
-        <div>
-            <Form
+        <div className='container-user'>
+
+
+            <Form className='form-user'
                 layout='horizontal'
                 size='large'
                 key={userData.name}
+                validateMessages={validateMessages}
                 initialValues={{
                     name: userData.name,
                     email: userData.email,
                     password: ''
                 }}
             >
-                <Form.Item
+                <Space className='container-avatar'>
+                    <Avatar
+                        // size='large'
+                        size={128}
+                        alt="Avatar do usuário"
+                        icon={<UserOutlined />}
+                    />
+                </Space>
+                <Form.Item className='inputForm'
                     label="Nome"
                     name="name"
                     rules={[
                         {
                             required: true,
-                            message: "Informe seu nome",
                         }
                     ]}
                 >
                     <Input placeholder='Nome completo' />
                 </Form.Item>
 
-                <Form.Item
+                <Form.Item className='inputForm'
                     label="E-mail"
                     name="email"
                     rules={[
                         {
                             required: true,
-                            message: "Informe seu e-mail",
+                            type: 'email'
                         }
                     ]}
                 >
-                    <Input placeholder='Exemplo: afonso@hotmail.com' />
+                    <Input type='email' placeholder='Exemplo: afonso@hotmail.com' />
                 </Form.Item>
 
-                <Form.Item
+                <Form.Item className='inputForm'
                     label="Senha"
                     name="password"
                 >
-                    <Input placeholder='Insira uma nova senha' />
+                    <Input.Password type='password' className='inputPassword' size='small' />
                 </Form.Item>
+                <button type='submit'>
+                    Enviar
+                </button>
             </Form>
         </div>
     )
