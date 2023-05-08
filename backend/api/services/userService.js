@@ -1,9 +1,12 @@
 const db = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const multer = require('multer');
+const upload = multer();
+
 class UserService {
 
-    static async createUser(userToCreate, batata = 'oi') {
+    static async createUser(userToCreate) {
         console.log(userToCreate.password)
         try {
             const userPasswordHash = bcrypt.hashSync(userToCreate.password, 8)
@@ -40,15 +43,20 @@ class UserService {
         }
     }
 
-    static async updateUser(id_user, userToUpdate) {
+    static async updateUser(id_user, userToUpdate, req) {
         if (!id_user || !userToUpdate) return { message: 'User not found' }
         try {
-            const updatedUser = await db.User.update(userToUpdate, { where: { id_user } });
+            if (userToUpdate.password !== undefined && userToUpdate.password !== null && userToUpdate.password !== '') {
+                const hashPasswordUpdate = bcrypt.hashSync(userToUpdate.password, 8);
+                userToUpdate.password = hashPasswordUpdate;
+            }
+            const updatedUser = await db.User.update(userToUpdate, { where: { id: id_user } });
             return updatedUser;
         } catch (error) {
             throw error;
         }
     }
+
 
 
     static async deleteUser(id_user) {

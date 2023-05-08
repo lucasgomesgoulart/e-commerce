@@ -40,7 +40,7 @@ const Account = () => {
                 block
                 options={[
                     { label: 'Editar perfil', value: 1 },
-                    { label: 'Cadastrar restaurantes', value: 2 },
+                    { label: 'Cadastrar restaurante', value: 2 },
                     { label: 'Informações adicionais', value: 3 }
                 ]}
                 className='segmented'

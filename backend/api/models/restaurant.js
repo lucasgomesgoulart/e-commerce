@@ -3,7 +3,7 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Restaurant extends Model {
-    
+
     static associate(models) {
       Restaurant.belongsTo(models.User, {
         foreignKey: 'user_id',
@@ -17,12 +17,20 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'restaurant_id',
         as: 'orders'
       });
+
+      Restaurant.hasOne(models.restaurant_address, {
+        foreignKey: 'restaurant_id',
+        as: 'address',
+        modelName: 'restaurant_address'
+      })      
     }
   };
   Restaurant.init({
     name: DataTypes.STRING,
     cnpj: DataTypes.STRING,
     description: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    Type: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Restaurant',

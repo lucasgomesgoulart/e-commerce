@@ -1,4 +1,3 @@
-const { request } = require('express');
 const orderService = require('../services/orderService');
 
 const OrderController = {

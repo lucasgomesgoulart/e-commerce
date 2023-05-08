@@ -20,13 +20,13 @@ const ButtonCart = ({ item }) => {
             .then(response => {
                 // console.log(response)
                 if (response.status === 201) {
-                    AlertToast("Item adicionado ao carrinho!", "OK");
+                    AlertToast("Item adicionado ao carrinho!");
                 } else {
-                    AlertToast("Faça login para adicionar itens ao carrinho.", "OK");
+                    AlertToast("Faça login para adicionar itens ao carrinho.");
                 }
             })
             .catch(error => {
-                AlertToast("Faça login para adicionar itens ao carrinho.", "OK");
+                AlertToast("Faça login para adicionar itens ao carrinho.", 'error');
             });
     }
 

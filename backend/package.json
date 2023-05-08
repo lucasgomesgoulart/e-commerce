@@ -21,6 +21,7 @@
     "mysql2": "^2.1.0",
     "path": "^0.12.7",
     "pexels": "^1.4.0",
+    "react-input-mask": "^2.0.4",
     "sequelize": "^5.22.5",
     "sequelize-cli": "^5.5.1"
   },

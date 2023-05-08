@@ -1,12 +1,20 @@
-import './styles.scss'
-
+import { Progress } from 'antd';
+import RestaurantForm from '../RestaurantForm';
+import { useState } from 'react';
 
 const RegisterRestaurant = () => {
-    return (
-        <h1>
-            Cadastrar restaurante
-        </h1>
-    )
-}
 
-export default RegisterRestaurant
+    const [percent, setPercent] = useState(88);
+
+
+
+    return (
+        <div>
+            
+            <RestaurantForm  />
+        </div>
+    );
+};
+
+
+export default RegisterRestaurant;

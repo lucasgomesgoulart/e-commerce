@@ -4,8 +4,8 @@ const routes = require('../../routes')
 
 module.exports = app => {
   app.use(
-    bodyParser.json(),
+    bodyParser.json({ limit: '50mb' }),
     cors(),
     routes
-    )
-  }
+  )
+}

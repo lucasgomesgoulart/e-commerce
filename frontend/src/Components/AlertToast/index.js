@@ -1,10 +1,15 @@
 import Swal from 'sweetalert2'
 import './styles.scss'
-const AlertToast = (title, text, confirmButtonText) => {
+const AlertToast = (title, icon) => {
     return (
         Swal.fire({
+            position: 'top-end', // define a posição na parte superior direita
+            icon: icon,
             title: title,
-            confirmButtonText: confirmButtonText,
+            showConfirmButton: false,
+            width: '350px',
+            heightAuto: true, // define a largura do alerta em pixels
+            timer: 1500
         })
     )
 }

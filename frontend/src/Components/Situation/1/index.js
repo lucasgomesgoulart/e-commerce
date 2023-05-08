@@ -2,7 +2,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import api from '../../../api';
 
 async function emailValidate(email, setSituation) {
-    { console.log(email) }
     try {
         const result = await api.get('/users', {
             params: {

@@ -43,6 +43,7 @@ const Restaurantes = () => {
             <List
                 itemLayout='vertical'
                 size='large'
+                className='lista'
                 pagination={{
                     onChange: (page) => {
                         console.log(page);

@@ -1,10 +1,7 @@
 import './styles.scss'
-import { Button, Form, Input } from 'antd';
+import { Form, Input, message } from 'antd';
 import './styles.scss'
-import { Avatar, Space } from 'antd';
-import { Upload, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-
+import api from '../../api';
 
 const EditProfile = ({ userData }) => {
 
@@ -13,32 +10,43 @@ const EditProfile = ({ userData }) => {
         types: {
             email: 'Insira um ${label} válido.',
         }
+    }
 
+    const onFinish = async (values) => {
+        const payload = {
+            name: values.name,
+            email: values.email
+        }
+        //verifica se existe um valor em password, e trim() é para ver se nao é uma string
+        if (values.password && values.password.trim() !== '') {
+            payload.password = values.password
+        }
+
+        try {
+            const response = await api.patch(`/updateUser/${userData.id}`, payload)
+            console.log(response)
+            if (response.status === 200) {
+                alert('ok')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
         <div className='container-user'>
-
-
             <Form className='form-user'
                 layout='horizontal'
                 size='large'
                 key={userData.name}
                 validateMessages={validateMessages}
+                onFinish={(values) => onFinish(values)}
                 initialValues={{
                     name: userData.name,
                     email: userData.email,
                     password: ''
                 }}
-            >
-                <Space className='container-avatar'>
-                    <Avatar
-                        // size='large'
-                        size={128}
-                        alt="Avatar do usuário"
-                        icon={<UserOutlined />}
-                    />
-                </Space>
+            >                
                 <Form.Item className='inputForm'
                     label="Nome"
                     name="name"
@@ -67,10 +75,11 @@ const EditProfile = ({ userData }) => {
                 <Form.Item className='inputForm'
                     label="Senha"
                     name="password"
+                    style={{marginLeft: 10}}
                 >
-                    <Input.Password type='password' className='inputPassword' size='small' />
+                    <Input.Password type='password' className='inputPassword' size='small'/>
                 </Form.Item>
-                <button type='submit'>
+                <button className='button-user' type='submit'>
                     Enviar
                 </button>
             </Form>

@@ -1,6 +1,7 @@
 const db = require('../models')
 
 class AddressService {
+    
     static async create(address) {
         try {
             const createdAddress = await db.Address.create({...address, id_user: address.id_user})
