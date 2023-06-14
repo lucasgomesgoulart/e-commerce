@@ -12,6 +12,16 @@ class AddressController {
         }
     }
 
+    static async findById(req, res) {
+        const user_id = req.admin
+        try {
+            const address = await addressService.findById(user_id)
+            return res.status(200).json({ address });
+        } catch (error) {
+            return res.status(500).json({ error: error })
+        }
+    }
+
     static async update(req, res) {
         const { id } = req.params
         const addressToUpdate = req.body

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createElement } from 'react';
-import { StarOutlined, LikeOutlined, MessageOutlined, FontSizeOutlined } from '@ant-design/icons';
+import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
 import { Context } from '../../Context/AuthProvider';
 import { List, Avatar, Space } from 'antd';
 import { createClient } from 'pexels';

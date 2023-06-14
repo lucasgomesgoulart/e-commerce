@@ -1,11 +1,21 @@
 const db = require('../models')
 
 class AddressService {
-    
+
     static async create(address) {
         try {
-            const createdAddress = await db.Address.create({...address, id_user: address.id_user})
+            const createdAddress = await db.Address.create({ ...address, id_user: address.id_user })
             return createdAddress
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static async findById(user_id) {
+        if (!user_id) return { message: 'Address not found' }
+        try {
+            const addressToFind = await db.Address.findAll({ where: { user_id: user_id } })
+            return addressToFind
         } catch (error) {
             throw error
         }

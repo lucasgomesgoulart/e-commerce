@@ -3,13 +3,16 @@ import api from '../../api';
 import './styles.scss'
 import { useContext } from 'react';
 import { Context } from '../../Context/AuthProvider';
+import { Button, Modal, Radio } from 'antd';
+
 
 const StatusCart = ({ cart, randomValue }) => {
 
     const { totalValue } = useContext(Context);
-
     const [total, setTotal] = useState('')
-
+    const [modalVisible, setModalVisible] = useState(false);
+    const [address, setAddress] = useState('')
+    const [selectedAddress, setSelectedAddress] = useState([]);
 
     useEffect(() => {
         calcTotal()
@@ -19,6 +22,18 @@ const StatusCart = ({ cart, randomValue }) => {
         const response = await api.get('/countTotalDishesValue')
         setTotal(response.data.total)
     }
+
+    const findAddress = async () => {
+        try {
+            const response = await api.get('/findAddress');
+            setAddress(response.data.address);
+            console.log(response.data.address)
+            setModalVisible(true);
+        } catch (error) {
+            console.log(error);
+            alert('Não foi possível localizar seu endereço!');
+        }
+    };
 
     return (
         <div className='container-resumo-compra'>
@@ -30,6 +45,14 @@ const StatusCart = ({ cart, randomValue }) => {
                 <h1 className="subtotal">Sub-total <span>{totalValue ? (`R$ ${totalValue}`) : total}</span></h1>
                 <h1 className="frete">Frete <span>R$ {randomValue}</span></h1>
                 <a href='#'>Adicionar cupom de desconto</a>
+                <p>
+                    <button
+                        style={{ border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
+                        onClick={() => { findAddress() }}
+                    >
+                        Selecionar endereço
+                    </button>
+                </p>
             </div>
 
             <div className='info-produtos-total'>
@@ -43,6 +66,26 @@ const StatusCart = ({ cart, randomValue }) => {
             <button className='info-produtos-button'>
                 FINALIZAR COMPRA
             </button>
+
+            <Modal
+                title="Selecione um endereço"
+                visible={modalVisible}
+                onCancel={() => setModalVisible(false)}
+                footer={null}
+            >
+                <Radio.Group
+                    onChange={(e) => setSelectedAddress(e.target.value)}
+                    value={selectedAddress}
+                >
+                    {selectedAddress &&
+                        address.map((address) => (
+                            <Radio key={address.id} value={address.id}>
+                                {`${address.street}, ${address.neighborhood}`}
+                            </Radio>
+                        ))}
+                </Radio.Group>
+
+            </Modal>
 
         </div>
     )
