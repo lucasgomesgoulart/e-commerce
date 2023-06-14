@@ -1,8 +1,6 @@
 # E-Commerce
 
-![E-Commerce](./path/to/your/logo.png)
-
-> Descrição curta do seu projeto.
+> Projeto feito a partir da idéia de fazer um "mini ifood", com o intúito de estudar e colocar meus conhecimentos em prática.
 
 ## Funcionalidades 
 - Registro de usuários: Os usuários podem criar uma conta no aplicativo.
