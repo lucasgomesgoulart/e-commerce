@@ -5,14 +5,13 @@ import { useContext } from 'react';
 import { Context } from '../../Context/AuthProvider';
 import { Button, Modal, Radio } from 'antd';
 
-
 const StatusCart = ({ cart, randomValue }) => {
 
     const { totalValue } = useContext(Context);
     const [total, setTotal] = useState('')
     const [modalVisible, setModalVisible] = useState(false);
     const [address, setAddress] = useState('')
-    const [selectedAddress, setSelectedAddress] = useState([]);
+    const [selectedAddress, setSelectedAddress] = useState({});
 
     useEffect(() => {
         calcTotal()
@@ -27,13 +26,19 @@ const StatusCart = ({ cart, randomValue }) => {
         try {
             const response = await api.get('/findAddress');
             setAddress(response.data.address);
-            console.log(response.data.address)
+            // console.log(response.data.address)
             setModalVisible(true);
         } catch (error) {
             console.log(error);
             alert('Não foi possível localizar seu endereço!');
         }
     };
+
+    const handleSelectAddress = (selectedAddress) => {
+        setSelectedAddress(selectedAddress);
+        setModalVisible(false);
+    };
+
 
     return (
         <div className='container-resumo-compra'>
@@ -43,17 +48,24 @@ const StatusCart = ({ cart, randomValue }) => {
 
             <div className='info-produtos'>
                 <h1 className="subtotal">Sub-total <span>{totalValue ? (`R$ ${totalValue}`) : total}</span></h1>
-                <h1 className="frete">Frete <span>R$ {randomValue}</span></h1>
-                <a href='#'>Adicionar cupom de desconto</a>
+                <h1 className="frete">Frete <span>{selectedAddress && Object.keys(selectedAddress).length > 0 ? `R$ ${randomValue}` : 'Não calculado'}</span></h1>
+                {selectedAddress && Object.keys(selectedAddress).length > 0 && (
+                    <>
+                        <h1 className='endereço'>Rua: <span>{selectedAddress.street}</span></h1>
+                        <h1 className='endereço'>Bairro: <span>{selectedAddress.neighborhood}</span></h1>
+                    </>
+                )
+                }
+                <a href='#' style={{ cursor: 'not-allowed' }}>Adicionar cupom de desconto</a>
                 <p>
                     <button
-                        style={{ border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }}
+                        className='selecionar-endereco-button'
                         onClick={() => { findAddress() }}
                     >
                         Selecionar endereço
                     </button>
                 </p>
-            </div>
+            </div >
 
             <div className='info-produtos-total'>
                 <h1>Total
@@ -74,20 +86,22 @@ const StatusCart = ({ cart, randomValue }) => {
                 footer={null}
             >
                 <Radio.Group
-                    onChange={(e) => setSelectedAddress(e.target.value)}
+                    onChange={(e) => setSelectedAddress(e.target.value, console.log(e.target.value))}
                     value={selectedAddress}
                 >
                     {selectedAddress &&
-                        address.map((address) => (
-                            <Radio key={address.id} value={address.id}>
+                        (Array.isArray(address) ? address : Object.values(address)).map((address) => (
+                            <Radio key={address.id} value={address}>
                                 {`${address.street}, ${address.neighborhood}`}
                             </Radio>
-                        ))}
+                        ))
+                    }
+                    <Button onClick={() => { handleSelectAddress(selectedAddress) }}>Salvar</Button>
                 </Radio.Group>
 
             </Modal>
 
-        </div>
+        </div >
     )
 }
 
