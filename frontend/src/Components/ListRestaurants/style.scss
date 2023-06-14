@@ -1,0 +1,47 @@
+.titulo-seus-restaurantes {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.botao-cadastrar-pratos {
+    background-color: #00C853;
+    color: #fff;
+    border-color: #00C853;
+  }
+  
+  .botao-cadastrar-pratos:hover,
+  .botao-cadastrar-pratos:focus {
+    background-color: #00A74E;
+    border-color: #00A74E;
+    color: #fff;
+  }
+  
+  .botao-editar {
+    background-color: #FFD600;
+    color: #000;
+    border-color: #FFD600;
+    color: #fff;
+  }
+  
+  .botao-editar:hover,
+  .botao-editar:focus {
+    background-color: #E6C300;
+    border-color: #E6C300;
+    color: #fff;
+  }
+  
+  .botao-apagar {
+    background-color: #FF1744;
+    color: #fff;
+    border-color: #FF1744;
+  }
+  
+  .botao-apagar:hover,
+  .botao-apagar:focus {
+    background-color: #D50000;
+    border-color: #D50000;
+    color: #fff;
+  }
+  

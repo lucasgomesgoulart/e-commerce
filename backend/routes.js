@@ -30,7 +30,8 @@ router.patch('/updateAddress/:id', verifyToken, AddressController.update)
 
 //restaurants
 router.post('/createRestaurant', verifyToken, RestaurantController.create)
-router.get('/findAllRestaurants', RestaurantController.findAllRestaurants)
+router.get('/findAllRestaurants', verifyToken, RestaurantController.findAllRestaurants)
+router.get('/findMyRestaurants', verifyToken, RestaurantController.findMyRestaurants)
 router.patch('/updateRestaurant/:id', verifyToken, RestaurantController.update)
 router.delete('/deleteRestaurant/:id', verifyToken, RestaurantController.delete)
 router.get('/restaurantes/:id/pratos', RestaurantController.findDishes) // retornar os pratos do restaurante.
@@ -41,6 +42,7 @@ router.post('/createAddressRestaurant', verifyToken, RestaurantAddressController
 //dishes
 router.post('/createDish', verifyToken, DishController.create)
 router.patch('/updateDish/:id', verifyToken, DishController.update)
+router.get('/findDishes/:id', verifyToken, DishController.update)
 router.delete('/deleteDish/:id', verifyToken, DishController.delete)
 
 //order

@@ -35,6 +35,15 @@ const App = () => {
     useEffect(() => {
         validateToken();
         // console.log(userId)
+        const storageEventListener = (event) => {
+            if (event.key === 'token' && !localStorage.getItem('token')) {
+                setAuthenticated(false);
+            }
+        };
+        window.addEventListener('storage', storageEventListener);
+        return () => {
+            window.removeEventListener('storage', storageEventListener);
+        };
     }, []);
 
     window.addEventListener('storage', () => {

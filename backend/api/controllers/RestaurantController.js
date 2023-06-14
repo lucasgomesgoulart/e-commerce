@@ -17,7 +17,7 @@ const RestaurantController = {
     try {
       const allRestaurants = await restaurantService.findAllRestaurants();
       return res.status(200).json({ allRestaurants })
-    }   catch (error) {
+    } catch (error) {
       return res.status(500).json({ message: error.message })
     }
   },
@@ -25,11 +25,13 @@ const RestaurantController = {
   async update(req, res) {
     try {
       const id_restaurant = req.params.id;
-      const updatedRestaurant = req.body
+      const updatedRestaurant = req.body;
+
       const restaurantToUpdate = await restaurantService.update(id_restaurant, updatedRestaurant);
       if (!restaurantToUpdate) {
         return res.status(404).json({ error: 'Restaurant not found' });
       }
+
       return res.status(200).json(restaurantToUpdate);
     } catch (error) {
       console.error(error);
@@ -59,8 +61,29 @@ const RestaurantController = {
       console.error(error);
       return res.status(error.statusCode || 500).json({ message: error.message });
     }
-  }
+  },
 
+  async findMyRestaurants(req, res) {
+    const user_id = req.admin
+    try {
+      const myRestaurants = await restaurantService.findMyRestaurants(user_id);
+      return res.status(200).json(myRestaurants);
+    } catch (error) {
+      console.error(error);
+      return res.status(error.statusCode || 500).json({ message: error.message });
+    }
+  },
+
+  async findOneRestaurant(req, res) {
+    const id = req.body
+    try {
+      const findOneRestaurant = await restaurantService.findOneRestaurant(id);
+      return res.status(200).json(findOneRestaurant);
+    } catch (error) {
+      console.error(error);
+      return res.status(error.statusCode || 500).json({ message: error.message });
+    }
+  }
 };
 
 module.exports = RestaurantController;

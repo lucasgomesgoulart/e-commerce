@@ -10,6 +10,18 @@ class RestaurantService {
     }
   }
 
+  static async findOneRestaurant(id) {
+    if (!id) {
+      return { message: 'Restaurant not found' };
+    }
+    try {
+      const restaurant = await db.Restaurant.findOne(id);
+      return restaurant;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async update(id_restaurant, restaurantToUpdate) {
     if (!id_restaurant || !restaurantToUpdate) {
       return { message: 'Restaurant not found' };
@@ -27,6 +39,20 @@ class RestaurantService {
   static async findAllRestaurants() {
     try {
       const response = await db.Restaurant.findAll()
+      return response
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async findMyRestaurants(user_id) {
+    try {
+      console.log(user_id);
+      const response = await db.Restaurant.findAll({
+        where: {
+          user_id: user_id
+        }
+      })
       return response
     } catch (error) {
       throw error;

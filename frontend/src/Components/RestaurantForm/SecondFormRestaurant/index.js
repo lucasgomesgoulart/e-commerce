@@ -1,8 +1,10 @@
 import { Form, Input, Select } from 'antd';
 import InputMask from 'react-input-mask';
 import { useState } from 'react';
+import api from '../../../api';
+import AlertToast from '../../AlertToast';
 
-const SecondFormRestaurant = ({ formData, setFormData, setStatusForm }) => {
+const SecondFormRestaurant = ({ formData, setFormData, setStatusForm, userData }) => {
     const [cep, setCep] = useState('');
 
     const estados = [
@@ -35,11 +37,21 @@ const SecondFormRestaurant = ({ formData, setFormData, setStatusForm }) => {
         { label: 'Tocantins', value: 'TO' }
     ];
 
-
-    const handleFinish = (values) => {
-        setFormData({ ...formData, ...values })
-        setStatusForm(3)
+    const handleFinish = async (values) => {
+        const formatDataWithUserId = { ...values, restaurant_id: formData.restaurant_id };
+        setFormData(formatDataWithUserId)
+        await createAddress(formatDataWithUserId)
+        AlertToast('Restaurante cadastrado com sucesso!', 'success', 'center', '200px')
     };
+
+    const createAddress = async (data) => {
+        try {
+            await api.post('/createAddressRestaurant', data)
+            console.log(data)
+        } catch (error) {
+            console.error('Erro ao criar endereço do restaurante:', error);
+        }
+    }
 
     return (
         <div className='container-user'>
@@ -49,7 +61,6 @@ const SecondFormRestaurant = ({ formData, setFormData, setStatusForm }) => {
                 size='large'
                 onFinish={handleFinish}
             >
-
                 <Form.Item
                     label='CEP'
                     name='zip_code'
@@ -141,9 +152,16 @@ const SecondFormRestaurant = ({ formData, setFormData, setStatusForm }) => {
                     <Input placeholder='Digite o número do estabelecimento' />
                 </Form.Item>
 
-                <button className='button-user' type='submit'>
-                    Enviar
-                </button>
+                <div style={{ display: 'flex', gap: '10px' }}>
+
+                    <button className='button-user' onClick={(() => { setStatusForm(1) })}>
+                        Voltar
+                    </button>
+
+                    <button className='button-user' type='submit'>
+                        Enviar
+                    </button>
+                </div>
             </Form>
         </div>
     );

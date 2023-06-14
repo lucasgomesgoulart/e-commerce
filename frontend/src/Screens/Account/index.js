@@ -2,6 +2,7 @@ import { Segmented } from 'antd';
 import './styles.scss'
 import { useEffect, useState } from 'react';
 import RegisterRestaurant from '../../Components/RegisterRestaurant'
+import ListRestaurants from '../../Components/ListRestaurants';
 import EditProfile from '../../Components/EditProfile'
 import api from '../../api';
 
@@ -20,7 +21,6 @@ const Account = () => {
         getProfile()
         setMenu(1)
     }, [])
-
 
     async function getProfile() {
         try {
@@ -41,14 +41,14 @@ const Account = () => {
                 options={[
                     { label: 'Editar perfil', value: 1 },
                     { label: 'Cadastrar restaurante', value: 2 },
-                    { label: 'Informações adicionais', value: 3 }
+                    { label: 'Meu restaurantes', value: 3 }
                 ]}
                 className='segmented'
             />
             <div>
                 {menu === 1 ? <EditProfile userData={userData} /> : null}
-                {menu === 2 ? <RegisterRestaurant /> : null}
-                {/* {menu === 1 ? <EditPerfil/> : null} */}
+                {menu === 2 ? <RegisterRestaurant userData={userData} /> : null}
+                {menu === 3 ? <ListRestaurants /> : null}
             </div>
         </div>
     )

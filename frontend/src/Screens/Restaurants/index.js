@@ -48,7 +48,7 @@ const Restaurantes = () => {
                     onChange: (page) => {
                         console.log(page);
                     },
-                    pageSize: 3,
+                    pageSize: 6,
                 }}
                 dataSource={restaurantes}
 
@@ -61,7 +61,7 @@ const Restaurantes = () => {
                             <IconText icon={MessageOutlined} text={Math.floor(Math.random() * 10)} key="list-vertical-message" />,
                         ]}
                         extra={
-                            <Avatar size={125} src={item.logo} style={{display: 'flex', float: 'left'}}/>
+                            <Avatar size={125} src={item.logo} style={{ display: 'flex', float: 'left' }} />
                         }
                     >
                         <List.Item.Meta

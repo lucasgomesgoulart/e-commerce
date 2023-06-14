@@ -1,34 +1,41 @@
 import { Form, Input } from 'antd';
-import api from '../../../api';
 import InputMask from 'react-input-mask';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import api from '../../../api';
 
-const FirstFormRestaurant = ({ onFinish, setFormData, setStatusForm, setPercent, percent }) => {
+const FirstFormRestaurant = ({ onFinish, setFormData, setStatusForm, userData }) => {
     const [cnpj, setCnpj] = useState('');
     const [telefone, setTelefone] = useState('');
-    const [filledInputs, setFilledInputs] = useState({})
 
-    const handleFinish = (values) => {
-        setFormData(values)
-        setStatusForm(2)
+    const handleFinish = async (values) => {
+        const formDataWithUserId = { ...values, user_id: userData.id }
+        setFormData(formDataWithUserId);
+        try {
+            const response = await createRestaurant(formDataWithUserId);
+            const restaurantId = response.data.id;
+            const formDataWithRestaurantId = { ...formDataWithUserId, restaurant_id: restaurantId };
+            setFormData(formDataWithRestaurantId);
+            setStatusForm(2);
+        } catch (error) {
+            console.error('Erro ao criar restaurante:', error);
+        }
     };
 
-    const handleInputChange = (name) => (event) => {
-        // get the input value
-        const value = event.target.value;
-        // update the filledInputs state
-        setFilledInputs((prevState) => ({
-            ...prevState,
-            [name]: !!value,
-        }));
+    const createRestaurant = async (values) => {
+        try {
+            return await api.post('/createRestaurant', values);
+        } catch (error) {
+            throw new Error('Erro ao criar restaurante:', error);
+        }
+    }
+
+    const handleCnpjChange = (event) => {
+        setCnpj(event.target.value);
     };
 
-    useEffect(() => {
-        // calculate the number of filled inputs
-        const filledCount = Object.values(filledInputs).filter(Boolean).length;
-        // update the percent state
-        setPercent((filledCount / 9) * 100);
-    }, [filledInputs]);
+    const handleTelefoneChange = (event) => {
+        setTelefone(event.target.value);
+    };
 
     return (
         <div className='container-user'>
@@ -49,7 +56,7 @@ const FirstFormRestaurant = ({ onFinish, setFormData, setStatusForm, setPercent,
                     ]}
                     className='form-item'
                 >
-                    <Input placeholder='Digite o nome do restaurante' onChange={handleInputChange} />
+                    <Input placeholder='Digite o nome do restaurante' />
                 </Form.Item>
 
                 <Form.Item
@@ -63,7 +70,7 @@ const FirstFormRestaurant = ({ onFinish, setFormData, setStatusForm, setPercent,
                     ]}
                     className='form-item'
                 >
-                    <Input placeholder='Ex: Restaurante de frutos do mar' onChange={handleInputChange('name')} />
+                    <Input placeholder='Ex: Restaurante de frutos do mar' />
                 </Form.Item>
 
                 <Form.Item
@@ -80,7 +87,7 @@ const FirstFormRestaurant = ({ onFinish, setFormData, setStatusForm, setPercent,
                     <InputMask
                         mask='99.999.999/9999-99'
                         value={cnpj}
-                        onChange={handleInputChange('name')}
+                        onChange={handleCnpjChange}
                         className='masked-input'
                         placeholder='Ex: 99.999.999/9999-99'
                     />
@@ -100,7 +107,7 @@ const FirstFormRestaurant = ({ onFinish, setFormData, setStatusForm, setPercent,
                     <InputMask
                         mask='(99) 99999-9999'
                         value={telefone}
-                        onChange={handleInputChange('name')}
+                        onChange={handleTelefoneChange}
                         className='masked-input'
                         placeholder='Ex: (99) 99999-9999'
                     />
